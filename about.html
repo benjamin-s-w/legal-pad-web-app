@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>About | Notes Web App</title>
+		<link rel="icon" href="img/note-icon.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="img/note-icon.png" /><!-- this is for an iPhone home screen shortcut icon -->
+		<link type="text/css" rel="stylesheet" href="styles.css" />
+		<!-- add link to google fonts -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<header>
+				<img id="logo" src="img/note-icon.png" alt="a logo image of a legal style notepad with a pen positioned diagonally in front of it"/>
+				<h1 id="aboutHeading">About | Legal Pad Web App</h1>
+				<div id="menuNavContainer">
+					<!-- black menu button for when menu is closed -->
+					<button id="mobileMenuButton">
+					</button>
+					<!-- white button for when menu is open -->
+					<button id="altMobileMenuButton">
+					</button>
+					<ul id="menuLinksContainer">
+						<li><a href="index.html">Home</a></li>
+						<!-- add more li's to have more nav links -->
+					</ul>
+				</div>
+			</header>
+			<ul id="mobileMenuContainer">
+				<li><a href="index.html">Home</a></li>
+				<!-- add more li's to have more nav links -->
+			</ul>
+			<section id="aboutTextContainer">
+				<div id="aboutText">
+					<h2>Artist's Statement / About This App</h2>
+					<p>This project is an ongoing, experimental note-taking web app for the final project for Advanced Multimedia Production class (DTC 477) in the Creative Media and Digital Culture program at Washington State University Vancouver. I would like someday to make a full-featured note-taking web app that allows users to create and store multiple notes with the option of creating a client-side database to store many layers of data within users' notes. I would like to allow users to keep/store their files in their choice of cloud or disk storage, which would allow for very easy portability and better security for their data. After using Evernote for many years and having an opportunity to try this project, I am glad for having the experience.</p>
+					<p>The main technological challenge of a project like this is finding examples online to see how one would go about implementing the functionality of note-taking through digital means. One majorly helpful example was the <a href="http://eqdn.tech/html5-note-app-tutorial/">HTML5 notes web app tutorial</a> done by <a href="http://disqus.com/by/youmeanjean">@youmeanjean</a> on <a href="http://eqdn.tech/">EQDN</a>. In this tutorial, they give some code examples of how to interact with a technology called <code>localStorage</code>, which is an HTML 5 feature allowing a site to save data in the user's browser instead of just on a server. Another example I found helpful was the <a href="http://eloquentjavascript.net/">Eloquent JavaScript online book</a>, which has a sample notetaking program in <a href="http://eloquentjavascript.net/18_forms.html">Chapter 18</a>, in the <a href="http://eloquentjavascript.net/18_forms.html#h_xMhbz7W4BY">section</a> about <code>localStorage</code>.
+				</div>
+			</section><!-- end #aboutTextContainer -->
+			<footer>
+				<h3>&copy; 2017 Benjamin Woodruff</h3>
+			</footer>
+		</div><!-- end wrapper -->
+		<script type="text/javascript">
+			
+			"use strict";
+			
+			$(document).ready(function() { //allows functions to wait till page is loaded before being executed
+				$("#mobileMenuButton").on("click", function() { //opens mobileMenuContainer when mobileMenuButton is clicked
+					$("#mobileMenuContainer").animate({"top":"9vh"}, 1000, "swing");
+					$(this).css({"display":"none"});
+					$("#altMobileMenuButton").css({"display":"block"});
+				});
+				$("#altMobileMenuButton").on("click", function() { //closes mobileMenuContainer when altMobileMenuButton is clicked
+					$("#mobileMenuContainer").animate({"top":"-100vh"}, 1000, "swing");
+					$(this).css({"display":"none"});
+					$("#mobileMenuButton").css({"display":"block"});
+				});
+			}); //end mobile animations
+		</script>
+	</body>
+</html>

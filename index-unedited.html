@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html><!-- Links to source examples and tutorials:
+
+					One majorly helpful example was the http://eqdn.tech/html5-note-app-tutorial/ HTML5 notes web app tutorial done by http://disqus.com/by/youmeanjean @youmeanjean on http://eqdn.tech/ EQDN. Another example I found helpful was the http://eloquentjavascript.net/ Eloquent JavaScript online book, which has a sample notetaking program in http://eloquentjavascript.net/18_forms.html Chapter 18, in the http://eloquentjavascript.net/18_forms.html#h_xMhbz7W4BY section about localStorage. I got some parts of my JS from the tutorial, especially the function to check localStorage, to save and retrieve notes, but I have updated a lot of the code since then with my own ideas and stuff from Eloquent JS also. -->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>Legal Pad Web App</title>
+		<link rel="icon" href="img/note-icon.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="img/note-icon.png" /><!-- this is for an iPhone home screen shortcut icon -->
+		<link type="text/css" rel="stylesheet" href="styles.css" />
+		<!-- add link to google fonts -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	</head>
+	<body onload="retrieveData()">
+		<div id="wrapper">
+			<header>
+				<img id="logo" src="img/note-icon.png" alt="a logo image of a legal style notepad with a pen positioned diagonally in front of it"/>
+				<h1>Legal Pad Web App</h1>
+				<div id="menuNavContainer">
+					<!-- black menu button for when menu is closed -->
+					<button id="mobileMenuButton">
+					</button>
+					<!-- white button for when menu is open -->
+					<button id="altMobileMenuButton">
+					</button>
+					<ul id="menuLinksContainer">
+						<li><a href="about.html">About</a></li>
+						<!-- add more li's to have more nav links -->
+					</ul>
+				</div>
+			</header>
+			<ul id="mobileMenuContainer">
+				<li><a href="about.html">About</a></li>
+				<!-- add more li's to have more nav links -->
+			</ul>
+			<section id="pageListContainer">
+				<button id="newPageButton">
+					New Page
+				</button>
+				<ul id="pageList">
+					<!-- for testing purposes
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					<li>
+						<h2>New Note</h2>
+						<p>First fifteen characters. . .</p>
+					</li>
+					-->
+				</ul><!-- end #pageList -->
+			</section><!-- end #pageListContainer -->
+			<div id="activePageContainer">
+				<button id="mobileSavePageButton" onclick="saveData()">
+					Save Page
+				</button>
+				<button id="savePageButton" onclick="saveData()">
+					Save Page
+				</button>
+				<div id="activePage">
+					<form id="activePageForm">
+						<label id="titleLabel" for="title">Title:</label>
+						<input type="text" id="title" name="title" placeholder="Name your page . . .">
+						<!-- consider adding the following later: //these should all appear in most browsers as drop down menus, whereas <select multiple> would allow for sort of a checkbox arrangement
+
+						<label for="drawers">Choose Drawer:</label>
+						<select id="drawers">
+							<option>Create New Drawer</option>
+							<option>Drawer1</option>
+							<option>Drawer2</option>
+							<option>etc.</option>
+						</select>
+						<label for="boxes">Choose Box:</label>
+						<select id="boxes">
+							<option>Create New Box</option>
+							<option>Box1</option>
+							<option>Box2</option>
+							<option>etc.</option>
+						</select>
+						<label for="notePads">Choose Notepad:</label>
+						<select id="notePads">
+							<option>Create New Notepad</option>
+							<option>Notepad1</option>
+							<option>NotePad2</option>
+							<option>etc.</option>
+						</select>
+						-->
+						<label id="textLabel" for="text">Text:</label>
+						<textarea id="text" placeholder="Write down anything you want . . ."></textarea>
+					</form><!-- end #activePageForm" -->
+				</div><!-- end #activePage -->
+			</div><!-- end #activePage-container -->
+			<footer>
+				<h3>&copy; 2017 Benjamin Woodruff</h3>
+			</footer>
+		</div><!-- end wrapper -->
+		<script type="text/javascript">
+
+			"use strict";
+
+			$(document).ready(function() { //allows functions to wait till page is loaded before being executed
+				$("#newPageButton").on("click", function() { //opens the activePageContainer panel when newPageButton is clicked
+					$("#activePageContainer").animate({"top":"9.5vh"}, 1000, "swing"); //moves the page editor into view from off the top of the screen
+					$(this).hide(300, "swing"); //hides the new page button
+					$("#mobileSavePageButton").show(1200, "swing"); //shows the mobile save page button
+				});
+				$("#mobileSavePageButton").on("click", function() { //closes the activePageContainer panel when mobileSavePageButton is clicked
+					$("#activePageContainer").animate({"top":"-100vh"}, 1000, "swing"); //moves the page editor out of view off the top of the screen
+					$(this).hide(300, "swing"); //hides the mobile save page button
+					$("#newPageButton").show(1200, "swing"); //shows the new page button
+				});
+				$("#mobileMenuButton").on("click", function() { //opens mobileMenuContainer when mobileMenuButton is clicked
+					$("#mobileMenuContainer").animate({"top":"9vh"}, 1000, "swing"); //opens the mobile menu
+					$(this).hide(); //hides the black mobile menu button
+					$("#altMobileMenuButton").show(); //shows the white mobile menu button
+				});
+				$("#altMobileMenuButton").on("click", function() { //closes mobileMenuContainer when altMobileMenuButton is clicked
+					$("#mobileMenuContainer").animate({"top":"-100vh"}, 1000, "swing"); //closes the mobile menu
+					$(this).hide(); //hides the white mobile menu button
+					$("#mobileMenuButton").show(); //shows the black mobile menu button
+				});
+			}); //end mobile animations
+
+			/* read about JS objects http://eloquentjavascript.net/04_data.html */
+
+			//user's temporary memory to keep all data until saved to local storage
+
+			var tempDataStore = {
+				userPage: {
+					title: "",
+					text: ""
+				}
+				/* EXAMPLE DATA TO BE STORED FOR USER:
+
+				"jjohnson": {
+					firstName: "Johnny",
+					lastName: "Johnson",
+					nickName: "jjohnson",
+					email: "jjohnson@jjmail.com",
+					birthday: "1/1/2001",
+					drawers: ["drawer1"],
+					boxes: ["box1"],
+					notePads: ["notePad1"],
+					pages: ["page1"]
+				},
+
+				"drawer1": {
+					title: "drawer1",
+					user: "jjohnson", //user.nickName
+					dateCreated: "1/1/2017",
+					dateUpdated: "1/1/2017",
+					boxes: ["box1"],
+					notePads: ["notePad1"],
+					pages: ["page1"]
+				},
+
+				"box1": {
+					title: "box1",
+					user: "jjohnson", //user.nickName
+					dateCreated: "1/1/2017",
+					dateUpdated: "1/1/2017",
+					drawer: "drawer1",
+					notePads: ["notePad1"],
+					pages: ["pages"]
+				},
+
+				"notePad1": {
+					title: "notePad1",
+					user: "jjohnson", //user.nickName
+					dateCreated: "1/1/2017",
+					dateUpdated: "1/1/2017",
+					drawer: "drawer1",
+					box: "box1",
+					pages: ["page1"]
+				},
+
+				"page1": {
+					title: "page1",
+					user: "jjohnson", //user.nickName
+					dateCreated: "1/1/2017",
+					dateUpdated: "1/1/2017",
+					drawer: "drawer1",
+					box: "box1",
+					notePad: "notePad1",
+					reminders: ["reminder1"],
+					text: "Hello, brand new text!"
+				}
+
+				"reminder1": {
+					user: "jjohnson", //user.nickName
+					page: "page1",
+					text: "Don't forget to make another note!",
+					alarmDates: ["1/2/2017"],
+					alarmTimes: ["5:00:00PM"]
+				}
+
+				*/
+			};
+
+			/*
+			//object constructors/prototypes
+
+			function User(firstName, lastName, nickName, email, birthday, dateStarted, drawers, boxes, notePads, pages) { //user object constructor; what else do we need to know about a user?
+				this.firstName = firstName,
+				this.lastName = lastName,
+				this.nickName = nickName,
+				this.email = email,
+				this.birthday = birthday,
+				this.dateStarted = dateStarted,
+				this.drawers = drawers,
+				this.boxes = boxes,
+				this.notePads = notePads,
+				this.pages = pages
+			};
+
+			function Drawer(title, nickName, dateCreated, dateUpdated, boxes, notepads, pages) { // pile object constructor
+				this.title = title,
+				this.user = user.nickName,
+				this.dateCreated = dateCreated,
+				this.dateUpdated = dateUpdated,
+				this.boxes = boxes,
+				this.notePads = notePads,
+				this.pages = pages
+			};
+
+			function Box(title, nickName, dateCreated, dateUpdated, drawer, notePads, pages) { // box object constructor
+				this.title = title,
+				this.user = user.nickName,
+				this.dateCreated = dateCreated,
+				this.dateUpdated = dateUpdated,
+				this.drawer = drawer,
+				this.notePads = notePads,
+				this.pages = pages
+			};
+
+			function NotePad(title, nickName, dateCreated, dateUpdated, drawer, box, pages) { // notePad object constructor
+				this.title = title,
+				this.user = user.nickName,
+				this.dateCreated = dateCreated,
+				this.dateUpdated = dateUpdated,
+				this.drawer = drawer,
+				this.box = box,
+				this.pages = pages
+			};
+
+			function Page(title, user, nickName, dateCreated, dateUpdated, drawer, box, notePad, reminders, text) { // page object constructor
+				this.title = title,
+				this.user = user.nickName,
+				this.dateCreated = dateCreated,
+				this.dateUpdated = dateUpdated,
+				this.drawer = drawer,
+				this.box = box,
+				this.notePad = notePad,
+				this.reminders = reminders,
+				this.text = text
+			};
+
+			function Reminder(user, page, text, alarmDates, alarmTimes) {
+				this.user = user.nickName,
+				this.page = page,
+				this.text = text,
+				this.alarmDates = alarmDates,
+				this.alarmTimes = alarmTimes
+			};
+			*/
+
+			function Page(userTitle, userText) {
+				this.userTitle = userTitle,
+				this.userText = userText
+			};
+
+
+			/*
+
+			TODO:
+
+			[] getting date from date object for dateCreated and dateUpdated
+
+			[] consider adding a button to print a note to a new HTML page that can be saved on the client's computer or mobile home screen
+
+
+			NOTES:
+
+				Some alternatives regarding jQuery:
+					Instead of $("#element") try document.getElementByID("element")
+					OR try document.querySelector("#element")
+					Instead of $(".elements") try document.querySelectorAll(".elements") to find all occurences of this class
+					Instead of $(".elements") try document.querySelector(".elements") to find the first occurence of this class
+					Instead of $("#element").on("click", function() {}); try element.addEventListener("click", function() {});
+			*/
+
+
+			//general functionality
+
+			function localStorageSupport() { //check for browser support of local storage
+				if(typeof(Storage) !== "undefined") {
+					return(true);
+				}
+				else {
+					return(false);
+				}
+			} //end local storage check
+
+
+			//user's initial temporary memory to store form input
+
+			var userTitle = document.getElementById("title").value || "Default";
+			var userText = document.getElementById("text").value || "Default";
+
+			/* From Eloquent JS:
+			for (var userTitle in tempDataStore) {
+				if (tempDataStore.hasOwnProperty(userTitle))
+					newPageListEntry(userTitle);
+			}
+			*/
+
+
+			//user initiated functions
+
+			function retrieveData() { //retrieves saved data
+				if(localStorageSupport() === true && JSON.parse(localStorage.getItem("tempDataStore")) !== "null") { //checks localStorage ability of browser and if the localStorage object has a null value for tempDataStore
+					tempDataStore = JSON.parse(localStorage.getItem('tempDataStore')); //initializes the main JS object from localStorage
+					for(var userPage in tempDataStore) { //loops through tempDataStore object to see if it has any page properties
+						if(tempDataStore.hasOwnProperty(userPage)) {
+							document.getElementById('title').value = tempDataStore.userPage.userTitle; //loads retrieved title into input element
+							document.getElementById('text').value = tempDataStore.userPage.userText; //loads retrieved text into textarea
+							newPageListEntry(userTitle, userText); //re-creates the appropriate DOM elements representing user's previous saved data
+						}
+					}
+				}
+				else {
+					alert("Local Storage doesn't work in your browser! The Save button will not save your work :(");
+				}
+			} //end note retrieval
+
+			function newPage() { //creates a new Page object with the starting values coming from the user's data input
+				var userPage = new Page(userTitle, userText); //use constructor to create a new object of Page type with
+				for(var userPage in tempDataStore) {
+					tempDataStore[userPage] = userPage; //save the new page object as a property of the tempDataStore object
+				}
+			} //end new page function
+
+			function saveData() { //provides functionality for save button
+				if(localStorageSupport() === true) {
+					if(tempDataStore === null) {
+						newPage(); //get page content and put it in tempDataStore
+						localStorage.setItem('tempDataStore', JSON.stringify(tempDataStore)); //converts tempDataStore object into string then stores it
+						newPageListEntry(); // add a li to the pageList ul for each note saved */
+					}
+					else {
+						alert("Nothing to save :)");
+					}
+				}
+				else {
+					alert("Local Storage doesn't work in your browser! The Save button will not save your work :(");
+				}
+			} //end save button
+
+			var pageListUL = document.querySelector("#pageList"); //identifies the DOM element to add children to
+
+			function newPageListEntry(userTitle, userText) { //creates the DOM elements needed to represent the user created data
+				var pageLI = document.createElement("li");
+				if (userTitle !== undefined && userText !== undefined) {
+					pageLI.innerHTML = "<h2>" + userTitle + "</h2>" + "<p>" + userText.substr(0, 15) + "</p>";
+					pageListUL.appendChild(pageLI);
+				}
+			} //end new page list entry function
+		</script>
+	</body>
+</html>
