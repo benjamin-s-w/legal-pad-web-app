@@ -18,7 +18,7 @@
 	<body onload="retrieveData()">
 		<div id="wrapper">
 			<header>
-				<img id="logo" src="img/note-icon.png" alt="a logo image of a legal style notepad with a pen positioned diagonally in front of it"/>
+				<img id="logo" src="img/note-icon.png" alt="a logo image of a legal style notepad"/>
 				<h1>Legal Pad Web App</h1>
 				<div id="menuNavContainer">
 					<!-- black menu button for when menu is closed -->
@@ -38,23 +38,24 @@
 				<!-- add more li's to have more nav links -->
 			</ul>
 			<section id="pageListContainer">
-				<button id="newPageButton">
+				<button id="newPageButton"><!-- this button is only visible in mobile and only brings down the active page container into view so the user can input their note -->
 					New Page
 				</button>
 				<ul id="pageList">
 				</ul>
 			</section><!-- end #pageListContainer -->
 			<div id="activePageContainer">
-				<button id="mobileSavePageButton" onclick="saveData()">
+				<button id="mobileSavePageButton" onclick="saveData()"><!-- this button is only visible in mobile and not only saves the newly created note but also moves the active page container out of view -->
 					Save Page
 				</button>
-				<button id="savePageButton" onclick="saveData()">
+				<button id="savePageButton" onclick="saveData()"><!-- desktop only button -->
 					Save Page
 				</button>
 				<div id="activePage">
 					<form id="activePageForm">
 						<label id="titleLabel" for="title">Title:</label>
-						<input type="text" id="title" name="title" placeholder="Name your page . . .">
+						<input type="text" id="title" name="title" placeholder="Name your page . . ."><!-- look into adding an iframe with attribute contenteditable set to true, which would allow the user to edit html elements within the note rather than a cheesy text box. Then, with some buttons, document.execCommand() could be used to change all sorts of things to the iframe content like the background color, font, or styling -->
+
 						<!-- consider adding the following later: //these should all appear in most browsers as drop down menus, whereas <select multiple> would allow for sort of a checkbox arrangement
 
 						<label for="drawers">Choose Drawer:</label>
