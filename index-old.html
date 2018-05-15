@@ -42,73 +42,7 @@
 					New Page
 				</button>
 				<ul id="pageList">
-					<!-- for testing purposes
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					<li>
-						<h2>New Note</h2>
-						<p>First fifteen characters. . .</p>
-					</li>
-					-->
-				</ul><!-- end #pageList -->
+				</ul>
 			</section><!-- end #pageListContainer -->
 			<div id="activePageContainer">
 				<button id="mobileSavePageButton" onclick="saveData()">
@@ -160,24 +94,24 @@
 
 			$(document).ready(function() { //allows functions to wait till page is loaded before being executed
 				$("#newPageButton").on("click", function() { //opens the activePageContainer panel when newPageButton is clicked
-					$("#activePageContainer").animate({"top":"9.5vh"}, 1000, "swing"); //moves the page editor into view from off the top of the screen
-					$(this).hide(300, "swing"); //hides the new page button
-					$("#mobileSavePageButton").show(1200, "swing"); //shows the mobile save page button
+					$("#activePageContainer").animate({"top":"9.5vh"}, 1000, "swing");
+					$(this).hide(300, "swing");
+					$("#mobileSavePageButton").show(1200, "swing");
 				});
 				$("#mobileSavePageButton").on("click", function() { //closes the activePageContainer panel when mobileSavePageButton is clicked
-					$("#activePageContainer").animate({"top":"-100vh"}, 1000, "swing"); //moves the page editor out of view off the top of the screen
-					$(this).hide(300, "swing"); //hides the mobile save page button
-					$("#newPageButton").show(1200, "swing"); //shows the new page button
+					$("#activePageContainer").animate({"top":"-100vh"}, 1000, "swing");
+					$(this).hide(300, "swing");
+					$("#newPageButton").show(1200, "swing");
 				});
 				$("#mobileMenuButton").on("click", function() { //opens mobileMenuContainer when mobileMenuButton is clicked
-					$("#mobileMenuContainer").animate({"top":"9vh"}, 1000, "swing"); //opens the mobile menu
-					$(this).hide(); //hides the black mobile menu button
-					$("#altMobileMenuButton").show(); //shows the white mobile menu button
+					$("#mobileMenuContainer").animate({"top":"9vh"}, 1000, "swing");
+					$(this).css({"display":"none"});
+					$("#altMobileMenuButton").css({"display":"block"});
 				});
 				$("#altMobileMenuButton").on("click", function() { //closes mobileMenuContainer when altMobileMenuButton is clicked
-					$("#mobileMenuContainer").animate({"top":"-100vh"}, 1000, "swing"); //closes the mobile menu
-					$(this).hide(); //hides the white mobile menu button
-					$("#mobileMenuButton").show(); //shows the black mobile menu button
+					$("#mobileMenuContainer").animate({"top":"-100vh"}, 1000, "swing");
+					$(this).css({"display":"none"});
+					$("#mobileMenuButton").css({"display":"block"});
 				});
 			}); //end mobile animations
 
@@ -185,11 +119,7 @@
 
 			//user's temporary memory to keep all data until saved to local storage
 
-			var tempDataStore = {
-				userPage: {
-					title: "",
-					text: ""
-				}
+			var tempDataStore = {};
 				/* EXAMPLE DATA TO BE STORED FOR USER:
 
 				"jjohnson": {
@@ -255,7 +185,6 @@
 				}
 
 				*/
-			};
 
 			/*
 			//object constructors/prototypes
@@ -303,8 +232,8 @@
 				this.pages = pages
 			};
 
-			function Page(title, user, nickName, dateCreated, dateUpdated, drawer, box, notePad, reminders, text) { // page object constructor
-				this.title = title,
+			function Page(userTitle, user, nickName, dateCreated, dateUpdated, drawer, box, notePad, reminders, userText) { // page object constructor
+				this.title = userTitle,
 				this.user = user.nickName,
 				this.dateCreated = dateCreated,
 				this.dateUpdated = dateUpdated,
@@ -312,7 +241,7 @@
 				this.box = box,
 				this.notePad = notePad,
 				this.reminders = reminders,
-				this.text = text
+				this.text = userText
 			};
 
 			function Reminder(user, page, text, alarmDates, alarmTimes) {
@@ -324,11 +253,12 @@
 			};
 			*/
 
+			//testing
+
 			function Page(userTitle, userText) {
 				this.userTitle = userTitle,
 				this.userText = userText
-			};
-
+			}
 
 			/*
 
@@ -364,11 +294,11 @@
 
 			//user's initial temporary memory to store form input
 
-			var userTitle = document.getElementById("title").value || "Default";
-			var userText = document.getElementById("text").value || "Default";
+			var userTitle = document.getElementById("title").value || "Your First Note";
+			var userText = document.getElementById("text").value || "Add text . . .";
 
 			/* From Eloquent JS:
-			for (var userTitle in tempDataStore) {
+			for (var userTitle in tempDataStore) {//couldn't get this to work for some reason
 				if (tempDataStore.hasOwnProperty(userTitle))
 					newPageListEntry(userTitle);
 			}
@@ -378,13 +308,15 @@
 			//user initiated functions
 
 			function retrieveData() { //retrieves saved data
-				if(localStorageSupport() === true && JSON.parse(localStorage.getItem("tempDataStore")) !== "null") { //checks localStorage ability of browser and if the localStorage object has a null value for tempDataStore
-					tempDataStore = JSON.parse(localStorage.getItem('tempDataStore')); //initializes the main JS object from localStorage
-					for(var userPage in tempDataStore) { //loops through tempDataStore object to see if it has any page properties
+				if(localStorageSupport() === true) { //checks localStorage ability of browser
+					tempDataStore = JSON.parse(localStorage.getItem("tempDataStore")) || {userPage: {userTitle: 'Your First Note', userText: 'Add text. . .'}}; //initializes the main JS object from localStorage
+					for(var userPage in tempDataStore) { //loops through tempDataStore object to see if it has any page title properties
 						if(tempDataStore.hasOwnProperty(userPage)) {
 							document.getElementById('title').value = tempDataStore.userPage.userTitle; //loads retrieved title into input element
 							document.getElementById('text').value = tempDataStore.userPage.userText; //loads retrieved text into textarea
-							newPageListEntry(userTitle, userText); //re-creates the appropriate DOM elements representing user's previous saved data
+							var pageLI = document.createElement("li");
+							pageLI.innerHTML = "<h2>" + tempDataStore.userPage.userTitle + "</h2><p>" + tempDataStore.userPage.userText.substr(0, 45) + " . . .</p>"; //add an if statement to get rid of . . . after userText snippet
+							pageListUL.appendChild(pageLI);
 						}
 					}
 				}
@@ -393,21 +325,36 @@
 				}
 			} //end note retrieval
 
-			function newPage() { //creates a new Page object with the starting values coming from the user's data input
-				var userPage = new Page(userTitle, userText); //use constructor to create a new object of Page type with
-				for(var userPage in tempDataStore) {
-					tempDataStore[userPage] = userPage; //save the new page object as a property of the tempDataStore object
+			/* From Eloquent JS:
+			function addNote() {
+				var name = prompt("Note name", "");
+				if(!name) return;
+				if(!pageList.hasOwnProperty(userTitle)) {
+					pageList[name] = "";
+					addToList(name);
+					saveToStorage();
 				}
-			} //end new page function
+				list.value = name;
+				current.value = notes[name];
+			}
+			*/
+
+			var pageListUL = document.querySelector("#pageList"); //identifies the DOM element to add children to
 
 			function saveData() { //provides functionality for save button
 				if(localStorageSupport() === true) {
-					if(tempDataStore === null) {
-						newPage(); //get page content and put it in tempDataStore
-						localStorage.setItem('tempDataStore', JSON.stringify(tempDataStore)); //converts tempDataStore object into string then stores it
-						newPageListEntry(); // add a li to the pageList ul for each note saved */
-					}
-					else {
+					if(userTitle !== "") {
+						userTitle = document.getElementById("title").value;
+						userText = document.getElementById("text").value;
+						var userPage = new Page(userTitle, userText); //use constructor to create a new object of Page type with
+						tempDataStore.userPage = userPage; //save the new page object as a property of the tempDataStore object
+						console.log(tempDataStore);
+						localStorage.setItem('tempDataStore', JSON.stringify(tempDataStore)); //converts tempDataStore object into string for storage
+						var pageLI = document.createElement("li");
+						pageLI.innerHTML = "<h2>" + tempDataStore.userPage.userTitle + "</h2>" + "<p>" + tempDataStore.userPage.userText.substr(0, 45) + " . . .</p>";
+						pageListUL.appendChild(pageLI);
+						//save multiple pages to tempDataStore and be able to recall them by clicking their corresponding list item
+					} else {
 						alert("Nothing to save :)");
 					}
 				}
@@ -415,16 +362,6 @@
 					alert("Local Storage doesn't work in your browser! The Save button will not save your work :(");
 				}
 			} //end save button
-
-			var pageListUL = document.querySelector("#pageList"); //identifies the DOM element to add children to
-
-			function newPageListEntry(userTitle, userText) { //creates the DOM elements needed to represent the user created data
-				var pageLI = document.createElement("li");
-				if (userTitle !== undefined && userText !== undefined) {
-					pageLI.innerHTML = "<h2>" + userTitle + "</h2>" + "<p>" + userText.substr(0, 15) + "</p>";
-					pageListUL.appendChild(pageLI);
-				}
-			} //end new page list entry function
 		</script>
 	</body>
 </html>
